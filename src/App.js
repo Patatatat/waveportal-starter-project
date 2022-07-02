@@ -103,8 +103,8 @@ const App = () => {
         </div>
 
         <div className="bio">
-          Hello I am Andres and Id'm learning how to do a smart contract with solidity and web3 😎. 
-          Connect your Ethereum wallet and wave at me!
+          Hello I am Andres and I'm learning how to do a smart contract with solidity and web3 😎. 
+          Connect your Ethereum wallet and wave at me 🙂!
         </div>
 
         <button className="waveButton" onClick={wave}>
