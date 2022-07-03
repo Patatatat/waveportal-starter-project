@@ -6,6 +6,7 @@ import wavePortal from './utils/WavePortal.json';
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [texto, setTexto] = useState("");
   const [allWaves, setAllWaves] = useState([]);
   const contractAddress = "0x02fE29A410B09Be38511436b978076254986e866";
   /*
@@ -14,7 +15,7 @@ const App = () => {
   const getAllWaves = async () => {
     try {
       if (window.ethereum) {
-        const provider = new ethers.providers.Web3Provider
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(contractAddress, wavePortal.abi, signer);
 
@@ -91,6 +92,12 @@ const App = () => {
     }
   }
 
+  const handleTextChange = event => {
+    // 👇️ update textarea value
+    setTexto(event.target.value);
+    console.log('cambio textarea', event.target.value);
+  };
+
   const wave = async () => {
     try {
       const { ethereum } = window;
@@ -100,10 +107,10 @@ const App = () => {
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(contractAddress, wavePortal.abi, signer);
 
-        let count = await waveportalContract.getTotalWaves();
+        let count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
 
-        const waveTxn = await wavePortalContract.wave();
+        const waveTxn = await wavePortalContract.wave(texto);
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
