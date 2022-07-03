@@ -10,7 +10,7 @@ const App = () => {
    * All state property to store all waves
    */
   const [allWaves, setAllWaves] = useState([]);
-  const contractAddress = "0xC63908B0fbeb6755fbE8f2FC0d818273db24cf53";
+  const contractAddress = "0x02fE29A410B09Be38511436b978076254986e866";
   /*
    * Create a method that gets all waves from your contract
    */
