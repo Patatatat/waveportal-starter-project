@@ -5,6 +5,7 @@ import abi from "./utils/WavePortal.json";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [texto, setTexto] = useState("");
   /*
    * All state property to store all waves
    */
@@ -118,7 +119,7 @@ const App = () => {
         /*
         * Execute the actual wave from your smart contract
         */
-        const waveTxn = await wavePortalContract.wave("this is a message")
+        const waveTxn = await wavePortalContract.wave(texto)
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -134,24 +135,36 @@ const App = () => {
     }
   }
 
+  const handleTextChange = event => {
+    // 👇️ update textarea value
+    setTexto(event.target.value);
+    console.log('cambio textarea', event.target.value);
+  };
+
   useEffect(() => {
     checkIfWalletIsConnected();
+    getAllWaves();
   }, [])
 
   return (
     <div className="mainContainer">
       <div className="dataContainer">
         <div className="header">
-          👋 Hey there! 👋
+          👋 Hello! 👋
         </div>
 
         <div className="bio">
           I am Andres and I'm learning how to do a smart contract with web3 and solidity 😎. Connect your Ethereum wallet and wave at me 🙂!
         </div>
+        
+<div>
+  <textarea cols={60} rows={10} onChange={handleTextChange}>{texto}</textarea>
 
-        <button className="waveButton" onClick={wave}>
+<button className="waveButton" onClick={wave}>
           Wave at Me
         </button>
+
+</div>
 
         {!currentAccount && (
           <button className="waveButton" onClick={connectWallet}>
@@ -159,9 +172,11 @@ const App = () => {
           </button>
         )}
 
+
+
         {allWaves.map((wave, index) => {
           return (
-            <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+            <div key={index} style={{ backgroundColor: "#000", color: "#fff",marginTop: "16px", padding: "8px" }}>
               <div>Address: {wave.address}</div>
               <div>Time: {wave.timestamp.toString()}</div>
               <div>Message: {wave.message}</div>
